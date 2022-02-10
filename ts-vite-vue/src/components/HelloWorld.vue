@@ -1,19 +1,34 @@
 <template>
-    <div>默认的count：{{ state.count }}</div>
-    <button @click="increment">增加</button>
+<h1>{{msg}}</h1>
+test
+{{ count }}
+<!-- <h3>{{obj.text}}</h3> -->
+<!-- 解构出来的操作 -->
+<h3>...toRefs解构出来的操作: {{text}}</h3> 
 </template>
 
 <script setup lang="ts">
-    import { reactive,computed } from "vue";
-    type DState = {
-        count:number,
-        double:number
-    }
-    const state: DState = reactive({
-        count: 0,
-        double:computed(()=>state.count * 2)
+    import { ref,reactive,defineProps,toRefs } from "vue";
+    // ref : 接收简单数据
+    // reactive : 接收复杂  如 对象
+    defineProps({
+        msg:String
     })
-    function increment(){
-        state.count++
-    }
+    const count = ref(0)
+    console.log('count1:',count.value);
+    count.value++
+    console.log('count2:',count.value);
+    // 使用reactive包裹单独的ref
+    const state = reactive({
+        count
+    })
+    console.log('state',state);
+
+    const obj = reactive({
+        text:"对象",
+        adderss:"地址xxx"
+    })
+    // 可以直接解构出来⬇️
+    const {text} = {...toRefs(obj)}
+    
 </script>
