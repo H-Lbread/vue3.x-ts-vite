@@ -1,34 +1,18 @@
 <template>
-<h1>{{msg}}</h1>
-test
-{{ count }}
-<!-- <h3>{{obj.text}}</h3> -->
-<!-- 解构出来的操作 -->
-<h3>...toRefs解构出来的操作: {{text}}</h3> 
+    <h1>{{ msg }}</h1>测试
+    <input type="text" ref="root" value="ref使用示例" />
 </template>
 
-<script setup lang="ts">
-    import { ref,reactive,defineProps,toRefs } from "vue";
-    // ref : 接收简单数据
-    // reactive : 接收复杂  如 对象
-    defineProps({
-        msg:String
-    })
-    const count = ref(0)
-    console.log('count1:',count.value);
-    count.value++
-    console.log('count2:',count.value);
-    // 使用reactive包裹单独的ref
-    const state = reactive({
-        count
-    })
-    console.log('state',state);
 
-    const obj = reactive({
-        text:"对象",
-        adderss:"地址xxx"
-    })
-    // 可以直接解构出来⬇️
-    const {text} = {...toRefs(obj)}
+<script setup lang="ts">
+import { ref,onMounted,defineProps } from "vue";
+defineProps({
+    msg:String
+})
+const root = ref(null)  // ref(null) 的时候代表 html
+// 在DOM首次渲染完成之后 才能获取到真实的dom
+onMounted(()=>{
+    console.log("🐻",root.value);
     
+})
 </script>
